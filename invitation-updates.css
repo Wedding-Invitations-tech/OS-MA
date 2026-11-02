@@ -1,0 +1,239 @@
+/* Version 2: editorial Arabic pages over the existing floral architecture.
+   The original cover/seal and its opening animation remain in style.css. */
+
+.experience { container-type: inline-size; }
+.stage-art--parchment { background: #f2dfca; }
+.stage-art--parchment .invitation-art { filter: saturate(.9); }
+
+/* A parchment layer hides all text printed in the former family page.
+   This retains the original flowers, pillars and arch around the edges.
+   There is deliberately no illustration of the couple. */
+.parchment-veil {
+  position: absolute;
+  z-index: 2;
+  inset: 12.5% 18% 7.2%;
+  background:
+    radial-gradient(ellipse 95% 73% at 51% 44%, rgba(249,235,217,.91),rgba(246,229,211,.98) 76%,rgba(242,221,201,.98)),
+    linear-gradient(165deg,#f2ddc7,#f7e9d8 50%,#f1dac1);
+  box-shadow: 0 0 35px 16px rgba(246,228,208,.9);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 6%, black 96%, transparent), linear-gradient(to right, transparent,black 7%,black 93%,transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent, black 6%, black 96%, transparent), linear-gradient(to right, transparent,black 7%,black 93%,transparent);
+  mask-composite: intersect;
+  pointer-events: none;
+}
+
+.invitation-copy {
+  position: absolute;
+  z-index: 5;
+  inset: 12.4% 23% 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  direction: rtl;
+  color: #6f482b;
+  font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Geeza Pro", Georgia, serif;
+  text-shadow: 0 1px 0 rgba(255,248,234,.65);
+}
+.invitation-copy p, .invitation-copy h2 { margin: 0; }
+.invitation-copy--welcome { gap: 1.15cqw; }
+.bismillah {
+  font-size: clamp(15px, 3.3cqw, 23px);
+  font-weight: 700;
+  line-height: 1.8;
+  color: #936329;
+  white-space: nowrap;
+}
+.quran-verse {
+  max-width: 100%;
+  font-size: clamp(12px, 2.6cqw, 17.5px);
+  line-height: 1.85;
+  font-weight: 600;
+  color: #735031;
+}
+.golden-divider {
+  width: 88%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1cqw;
+  color: #b48347;
+  font-size: clamp(15px, 3.5cqw, 23px);
+  line-height: .9;
+  flex: 0 0 auto;
+}
+.golden-divider:before, .golden-divider:after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left,transparent,#b5864a,transparent);
+  opacity: .7;
+}
+.golden-divider--small { width: 65%; }
+.golden-divider--end { width: 72%; margin-top: 1.5cqw; }
+.families-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: clamp(14px, 3.15cqw, 21px);
+  line-height: 1.55;
+  font-weight: 700;
+}
+.families-copy .and-word { color:#ad7b3f; font-size:clamp(17px,3.8cqw,26px); line-height:1.1; }
+.invitation-intro {
+  font-size: clamp(13px, 3.0cqw, 21px);
+  font-weight: 600;
+  line-height: 1.8;
+  white-space: nowrap;
+}
+.couple-names { width: 100%; display: flex; flex-direction: column; align-items:center; gap:.25cqw; }
+.person-name { display: flex; flex-direction: column; align-items:center; line-height: 1.35; }
+.person-name strong {
+  font-size: clamp(30px, 7.4cqw, 50px);
+  line-height: 1.22;
+  font-weight: 700;
+  color: #a67435;
+  text-shadow: 0 1px 1px #fff8e6, 0 2px 3px rgba(123,74,34,.14);
+}
+.person-name span { font-size: clamp(12px, 2.7cqw, 18px); line-height: 1.5; }
+.marriage-link { font-size: clamp(15px, 3.5cqw, 24px); line-height: 1.35; color:#a27441; }
+
+/* Date: all date content is accessible text, visible immediately and editable. */
+.invitation-copy--date { inset: 18% 21% 12%; gap: 4.2cqw; }
+.date-introduction { font-size: clamp(16px, 4cqw, 27px); line-height: 1.8; font-weight: 700; color:#8f602d; }
+.date-badges { width: 112%; display: grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.9cqw; align-items:stretch; }
+.date-badge {
+  min-width:0;
+  min-height: 24cqw;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border: 1.6px solid rgba(166,114,51,.86);
+  outline: 1px solid rgba(190,146,83,.32);
+  outline-offset:-5px;
+  border-radius: 46% 46% 23% 23% / 24% 24% 12% 12%;
+  background: linear-gradient(140deg,rgba(255,251,239,.55),rgba(250,226,194,.13),rgba(255,249,231,.44));
+  box-shadow:0 3px 9px rgba(125,84,44,.08), inset 0 0 0 3px rgba(255,250,238,.35);
+}
+.date-badge strong { font-size: clamp(23px, 5.8cqw, 39px); color:#a37337; line-height:1.4; }
+.date-badge--month strong { font-size: clamp(18px, 4.4cqw, 29px); }
+.date-badge span { width:73%; margin-top:1.8cqw; border-top:1px solid rgba(165,116,61,.5); padding-top:1.3cqw; font-size:clamp(13px,3.1cqw,20px); }
+.location-block { display:flex;flex-direction:column;align-items:center; gap:1.4cqw; width:100%; }
+.location-symbol { width:9.8cqw;height:9.8cqw;border:1px solid rgba(161,108,54,.75);border-radius:50%; display:grid;place-items:center; font-family:serif;font-size:clamp(26px,5.8cqw,38px);color:#aa793a;line-height:1; }
+.location-block h2 { font-size:clamp(26px,6.2cqw,42px);font-weight:700;color:#a47436;line-height:1.3; }
+.location-block p { font-size:clamp(14px,3.3cqw,23px);line-height:1.6; }
+.maps-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height: 10.6cqw;
+  width:100%;
+  margin-top:1.4cqw;
+  padding: 1.3cqw 3cqw;
+  border: 2px solid #e0c191;
+  border-radius: 999px;
+  box-shadow:0 6px 15px rgba(107,70,35,.17),inset 0 0 0 1px rgba(255,242,208,.34);
+  background:linear-gradient(145deg,#be8b3d,#9a6425 54%,#b58336);
+  color:#fff9e9;
+  text-decoration:none;
+  text-shadow:0 1px 2px rgba(67,41,17,.4);
+  font-family:inherit;
+  font-size:clamp(13px,3.05cqw,21px);
+  font-weight:700;
+  line-height:1.5;
+  transition:transform .3s ease,box-shadow .3s ease,filter .3s ease;
+}
+.maps-button:not(.maps-button--pending):hover,.maps-button:not(.maps-button--pending):focus-visible {
+  transform:translateY(-2px);box-shadow:0 10px 20px rgba(107,70,35,.2);filter:brightness(1.07);
+}
+.maps-button--pending { cursor:not-allowed;opacity:.65;filter:saturate(.45); }
+.visually-hidden {position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+
+/* Gratitude belongs after the last event, on the same programme page. */
+.programme-thanks {
+  position:absolute;
+  z-index:5;
+  top: 79.8%;
+  left: 16%;
+  right: 16%;
+  padding: 2.4cqw 2cqw;
+  text-align:center;
+  color:#80582f;
+  font-family:"Amiri","Noto Naskh Arabic","Traditional Arabic","Geeza Pro",serif;
+  background:radial-gradient(ellipse at center,rgba(246,227,204,.96) 0,rgba(246,227,204,.91) 68%,rgba(246,227,204,.05) 100%);
+  text-shadow:0 1px #fff7e8;
+}
+.programme-thanks .golden-divider { width:65%;margin:0 auto 2cqw; }
+.programme-thanks p { margin:0;line-height:1.7;font-size:clamp(12px,2.5cqw,18px); }
+.programme-thanks p:first-of-type {font-size:clamp(16px,3.45cqw,24px);font-weight:700;color:#a57538;}
+
+@media(max-width:360px){
+  .invitation-copy--welcome {gap: .65cqw;}
+  .bismillah {font-size:14px;}
+  .quran-verse {font-size:11.5px;line-height:1.65;}
+  .families-copy {font-size:13px;line-height:1.45;}
+  .invitation-intro {font-size:12px;}
+  .person-name strong {font-size:27px;}
+  .invitation-copy--date {gap:3cqw;}
+}
+@media(prefers-reduced-motion:reduce){
+  .maps-button {transition:none;}
+}
+
+/* Extend the final programme artwork with a proper closing section.
+   The last scheduled event remains fully visible above the thank-you. */
+.stage-art--programme { aspect-ratio: auto; height: 214cqw; }
+.stage-art--programme > .invitation-art { height: 177.68cqw; }
+.stage-art--programme .programme-thanks {
+  top: 165cqw;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15cqw 13cqw 4cqw;
+  background: linear-gradient(to bottom,rgba(246,227,206,0),rgba(246,227,206,.94) 18%,#f3dfc9 62%,#efdbc4);
+}
+.stage-art--programme .programme-thanks .golden-divider {margin-bottom:2cqw;}
+.stage-art--programme .programme-thanks p {font-size:clamp(14px,2.8cqw,19px);}
+.stage-art--programme .programme-thanks p:first-of-type {font-size:clamp(19px,3.8cqw,25px);}
+
+/* Keep essential names legible on the narrowest mobile screens. */
+@media (min-width:361px) {
+  .invitation-copy--welcome { inset-inline:21%; gap:1.2cqw; }
+  .bismillah {font-size:clamp(17px,3.7cqw,24px);}
+  .quran-verse {font-size:clamp(13px,2.9cqw,19px);}
+  .families-copy {font-size:clamp(16px,3.45cqw,23px);}
+  .invitation-intro {font-size:clamp(14px,3.2cqw,22px);}
+  .person-name strong {font-size:clamp(34px,7.8cqw,53px);}
+  .person-name span {font-size:clamp(13px,2.9cqw,19px);}
+}
+
+/* Version 3: longer verified Qur'anic verse and complete family names.
+   Keep all copy within the ornamental arch across mobile widths. */
+.invitation-copy--welcome { inset: 12.8% 19.5% 7.6%; gap: .7cqw; }
+.quran-verse { max-width: 100%; font-size: clamp(12.5px, 3.65cqw, 20px); line-height: 1.65; }
+.families-copy { width: 100%; font-size: clamp(14px, 4.15cqw, 22px); line-height: 1.45; }
+.families-copy p { max-width: 100%; overflow-wrap: normal; text-wrap: balance; }
+.invitation-copy--welcome .golden-divider { font-size: clamp(13px, 2.9cqw, 19px); }
+.date-introduction { text-wrap: balance; }
+@media (min-width: 361px) {
+  .invitation-copy--welcome { inset-inline: 19.5%; gap: .75cqw; }
+  .quran-verse { font-size: clamp(12.5px, 3.65cqw, 20px); }
+  .families-copy { font-size: clamp(14px, 4.15cqw, 22px); }
+}
+@media (max-width: 360px) {
+  .invitation-copy--welcome { inset-inline: 17%; gap: .45cqw; }
+  .quran-verse { font-size: 12.5px; line-height: 1.55; }
+  .families-copy { font-size: 14px; line-height: 1.35; }
+}
+
+/* Keep the decorative closing verse bracket attached to the final word. */
+.quran-verse-ending { white-space: nowrap; }
+/* Balance the complete verse across lines rather than isolating its ending. */
+.quran-verse { text-wrap: balance; }

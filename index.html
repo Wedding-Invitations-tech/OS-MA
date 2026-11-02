@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f3e2cd" />
   <meta name="color-scheme" content="light" />
-  <meta name="description" content="دعوة عقد قران عمر ومروة — ٢٨ نوفمبر ٢٠٢٦، القاهرة" />
+  <meta name="description" content="دعوة عقد قران عمر ومروة — ٥ ديسمبر ٢٠٢٦، القاهرة" />
   <meta property="og:title" content="Omer & Marwa | دعوة عقد القران" />
-  <meta property="og:description" content="٢٨ نوفمبر ٢٠٢٦ — القاهرة، مصر" />
+  <meta property="og:description" content="٥ ديسمبر ٢٠٢٦ — القاهرة، مصر" />
   <title>Omer & Marwa | دعوة عقد القران</title>
-
+  <!-- Preserve the supplied envelope artwork, geometry, and animation assets. -->
   <link rel="preload" as="image" href="assets/cover.webp" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/letters-mask.webp" type="image/webp" crossorigin />
   <link rel="preload" as="image" href="assets/flap-top.webp" type="image/webp" crossorigin />
@@ -19,99 +19,99 @@
   <link rel="preload" as="image" href="assets/band-right.webp" type="image/webp" crossorigin />
   <link rel="preload" as="image" href="assets/wash-left.webp" type="image/webp" crossorigin />
   <link rel="preload" as="image" href="assets/wash-right.webp" type="image/webp" crossorigin />
-  <link rel="preload" as="image" href="assets/hero.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/family.webp" fetchpriority="high" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="invitation-updates.css" />
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body class="is-locked">
-  <noscript>
-    <div class="noscript">هذه الدعوة التفاعلية تحتاج إلى JavaScript لعرض حركة فتح الظرف وخاصية كشف التاريخ.</div>
-  </noscript>
+  <noscript><div class="noscript">هذه الدعوة التفاعلية تحتاج إلى تفعيل JavaScript لفتح الظرف. <a href="#welcome">تفاصيل الدعوة</a></div></noscript>
 
   <main id="experience" class="experience" aria-label="دعوة عقد قران عمر ومروة">
-    <section id="welcome" class="stage stage--hero" aria-label="مرحباً بكم في حفل عقد القران">
-      <div class="stage-art">
-        <img
-          class="invitation-art"
-          src="assets/hero.webp"
-          width="941"
-          height="1672"
-          alt="دعوة عقد قران عمر ومروة بإطار إسلامي ذهبي، وعروسان أمام مسجد وقت الغروب"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </div>
-    </section>
-
-    <section id="families" class="stage" aria-label="تفاصيل عمر ومروة والعائلتين">
-      <div class="stage-art">
-        <img
-          class="invitation-art"
-          src="assets/family.webp"
-          width="941"
-          height="1672"
-          alt="تفاصيل عقد قران عمر نجل صلاح عبد الله محمد محمد صالح ومروة ابنة أمين صبري أحمد"
-          decoding="async"
-        />
-      </div>
-    </section>
-
-    <section id="date" class="stage" aria-label="التاريخ والمكان">
-      <div class="stage-art stage-art--interactive" id="dateArt">
-        <img
-          class="invitation-art"
-          src="assets/date.webp"
-          width="941"
-          height="1672"
-          alt="تاريخ عقد القران ٢٨ نوفمبر ٢٠٢٦، بعد صلاة المغرب، في القاهرة، مصر"
-          decoding="async"
-        />
-
-        <div class="venue-arabic" aria-hidden="true">[المكان] - القاهرة، مصر</div>
-
-        <div class="scratch-group" aria-label="اكشط البطاقات الذهبية لكشف التاريخ">
-          <div class="scratch-zone scratch-zone--year" data-scratch="year" aria-label="اكشط لكشف السنة">
-            <canvas></canvas>
+    <!-- Page 1: no people, only the existing floral, architectural artwork and editable Arabic text. -->
+    <section id="welcome" class="stage stage--welcome" aria-label="دعوة عقد القران والعائلتان">
+      <div class="stage-art stage-art--parchment">
+        <img class="invitation-art" src="assets/family.webp" width="941" height="1672" alt="إطار زخرفي ذهبي وأزهار عاجية" fetchpriority="high" decoding="async" />
+        <div class="parchment-veil" aria-hidden="true"></div>
+        <div class="invitation-copy invitation-copy--welcome">
+          <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+          <p class="quran-verse">﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ <span class="quran-verse-ending">يَتَفَكَّرُونَ ﴾</span></p>
+          <div class="golden-divider" aria-hidden="true"><span>✧</span></div>
+          <div class="families-copy">
+            <p>آل صلاح عبد الله محمد محمد صالح</p>
+            <p>آل احمد سيد احمد احمد</p>
+            <span class="and-word">و</span>
+            <p>آل امين صبري احمد عبدالعال</p>
+            <p>آل الرشيد احمد جلي</p>
           </div>
-          <div class="scratch-zone scratch-zone--month" data-scratch="month" aria-label="اكشط لكشف الشهر">
-            <canvas></canvas>
+          <div class="golden-divider golden-divider--small" aria-hidden="true"><span>✧</span></div>
+          <p class="invitation-intro">يتشرفون بدعوتكم لحضور عقد قران</p>
+          <div class="couple-names" aria-label="عمر ومروة">
+            <div class="person-name"><strong>عمر</strong><span>نجل صلاح عبد الله</span></div>
+            <span class="marriage-link">على</span>
+            <div class="person-name"><strong>مروة</strong><span>كريمة أمين صبري أحمد</span></div>
           </div>
-          <div class="scratch-zone scratch-zone--day" data-scratch="day" aria-label="اكشط لكشف اليوم">
-            <canvas></canvas>
-          </div>
+          <div class="golden-divider golden-divider--end" aria-hidden="true"><span>✧</span></div>
         </div>
       </div>
     </section>
 
-    <section id="timeline" class="stage stage--last" aria-label="برنامج الحفل">
-      <div class="stage-art">
-        <img
-          class="invitation-art"
-          src="assets/timeline.webp"
-          width="941"
-          height="1672"
-          alt="برنامج الحفل: استقبال الضيوف، عقد القران، العشاء، والاحتفال والتصوير"
-          decoding="async"
-        />
+    <!-- Page 2: visible date; no scratch, no time block. -->
+    <section id="date" class="stage stage--date" aria-label="تاريخ عقد القران والمكان">
+      <div class="stage-art stage-art--parchment">
+        <img class="invitation-art" src="assets/family.webp" width="941" height="1672" alt="إطار زخرفي ذهبي وورود" loading="lazy" decoding="async" />
+        <div class="parchment-veil" aria-hidden="true"></div>
+        <div class="invitation-copy invitation-copy--date">
+          <div class="date-introduction">يتألق يومنا المبارك بإذن الله تعالى<br />بحضوركم الكريم يوم السبت الموافق:</div>
+          <div class="golden-divider" aria-hidden="true"><span>✧</span></div>
+          <h2 class="visually-hidden">تاريخ عقد القران: ٥ ديسمبر ٢٠٢٦</h2>
+          <div class="date-badges" aria-label="٥ ديسمبر ٢٠٢٦">
+            <div class="date-badge"><strong>٥</strong><span>اليوم</span></div>
+            <div class="date-badge date-badge--month"><strong>ديسمبر</strong><span>الشهر</span></div>
+            <div class="date-badge"><strong>٢٠٢٦</strong><span>السنة</span></div>
+          </div>
+          <div class="golden-divider" aria-hidden="true"><span>✧</span></div>
+          <div class="location-block">
+            <span class="location-symbol" aria-hidden="true">⌖</span>
+            <h2>المكان</h2>
+            <p id="venueName">Le Ciel Hotel – مدينة نصر، القاهرة، مصر</p>
+            <a id="mapsLink" class="maps-button" href="https://www.google.com/maps/place/Le+Ciel+Hotel%D8%8C+11757%D8%8C+7+Abd+El-Wahab+El-Qady%D8%8C+11757+Salah+Salem+St,+Al+Golf,+Nasr+City,+Cairo+Governorate,+Egypt%E2%80%AD/@30.0821582,31.3225127,17z/data=!4m6!3m5!1s0x14583fe5698c7cb9:0x66550542daa335e9!8m2!3d30.0821582!4d31.3225127!16s%2Fg%2F11nfct7k2p?g_ep=Eg1tbF8yMDI2MTAyN18wIOC7DCoASAJQAg%3D%3D" target="_blank" rel="noopener noreferrer" aria-label="افتح موقع Le Ciel Hotel على خرائط Google">
+              اضغط هنا لفتح رابط الموقع
+            </a>
+          </div>
+          <div class="golden-divider golden-divider--end" aria-hidden="true"><span>✧</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Page 3: preserve programme illustration and add appreciation afterwards. -->
+    <section id="timeline" class="stage stage--last" aria-label="برنامج الحفل وكلمات الشكر">
+      <div class="stage-art stage-art--programme">
+        <img class="invitation-art" src="assets/timeline.webp" width="941" height="1672" alt="برنامج الحفل: استقبال الضيوف الساعة السادسة، عقد القران الساعة السادسة والنصف، العشاء الساعة السابعة والنصف، ثم الاحتفال والتصوير الساعة الثامنة والنصف" loading="lazy" decoding="async" />
+        <div class="programme-thanks">
+          <div class="golden-divider" aria-hidden="true"><span>✧</span></div>
+          <p>شكراً لمشاركتكم فرحتنا</p>
+          <p>بحضوركم تكتمل سعادتنا، وبدعواتكم تحلو بدايتنا.</p>
+          <p>نسأل الله أن يديم عليكم الأفراح والمسرّات.</p>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- Keep the original envelope DOM and opening animation intact. -->
   <div id="envelope" class="envelope" role="dialog" aria-modal="true" aria-label="افتح دعوة عمر ومروة">
     <div class="envelope-ambient" aria-hidden="true"></div>
     <div class="envelope-card" id="envelopeCard" aria-hidden="true">
       <div class="reveal-light" aria-hidden="true"></div>
       <div class="reveal-light reveal-light--inner" aria-hidden="true"></div>
-
       <div class="envelope-piece envelope-piece--sheet"></div>
-
       <div class="seal-light-system" aria-hidden="true">
         <span class="seal-core"></span>
         <span class="seal-spill"></span>
       </div>
-
       <span class="flap-glow" aria-hidden="true"></span>
       <span class="paper-glow paper-glow--body" aria-hidden="true"></span>
-
       <div class="flap-top" aria-hidden="true">
         <span class="flap-top__art"></span>
         <span class="paper-glow paper-glow--flap"></span>
@@ -124,13 +124,11 @@
         <span class="letter-flare"><i class="letter-flare__mask"><i class="letter-flare__sweep"></i></i></span>
       </div>
     </div>
-
     <button id="openInvitation" class="seal-hotspot" type="button" aria-label="اضغط على ختم O and M لفتح الدعوة">
       <span class="sr-only">افتح الدعوة</span>
     </button>
   </div>
 
   <div class="grain" aria-hidden="true"></div>
-  <script src="script.js"></script>
 </body>
 </html>
