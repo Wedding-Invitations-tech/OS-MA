@@ -1,55 +1,124 @@
-
-:root{
-  --paper:#ead3db;
-  --max-card:620px;
-  --stage-width:min(100vw,var(--max-card));
+/* Option 2 — Regal Dusk.  Full-size page images remain untouched.
+   Only the connections between image panels are blended. */
+:root {
+  --paper: #68465d;
+  --max-card: 620px;
+  --stage-width: min(100vw, var(--max-card));
+  --bridge-out: #6f4b5f;
+  --bridge-in: #6d4960;
+  --bridge-mid: #4e3549;
 }
-html,body{background:#e7d1d9}
-.exact-experience{
-  background:transparent;
-  width:var(--stage-width);
-  margin-inline:auto;
+html {
+  background:#4e344b;
 }
-.exact-stage + .exact-stage{margin-top:-54px}
+body {
+  background: radial-gradient(ellipse at 50% 10%,#79556f 0%,#51364c 55%,#39273a 100%) fixed;
+}
+.exact-experience {
+  width: var(--stage-width);
+  margin: 0 auto;
+  background: #65415b;
+  isolation:isolate;
+  box-shadow: 0 0 90px rgba(31,15,31,.25);
+}
+.exact-stage,
+.exact-stage + .exact-stage{
+  margin-top:0;
+}
+.exact-stage:not(:first-child)::before{
+  content:none;
+}
 .exact-art-wrap{
   aspect-ratio:auto;
-  background:transparent;
-  overflow:visible;
+  background:var(--bridge-mid);
+  overflow:hidden;
   box-shadow:none;
   filter:none;
-  transform:translateY(16px) scale(.997);
-  opacity:.96;
-  transition:opacity .95s var(--ease-lux),transform 1.2s var(--ease-lux);
+  transform:translateY(0) scale(1);
+  opacity:1;
+  transition:opacity .85s var(--ease-lux),transform 1s var(--ease-lux);
 }
-.exact-stage.is-active .exact-art-wrap{opacity:1;transform:translateY(0) scale(1)}
+.exact-stage.is-active .exact-art-wrap{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  filter:none;
+}
 .exact-stage:not(:first-child) .exact-art-wrap{
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.25) 14px,#000 56px,#000 100%);
-  mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.25) 14px,#000 56px,#000 100%);
+  -webkit-mask-image:none;
+  mask-image:none;
 }
-.exact-page-art{
-  display:block;
+.exact-page-art {
   width:100%;
   height:auto;
+  display:block;
   user-select:none;
   -webkit-user-drag:none;
 }
-.exact-art-wrap::after{display:none}
-.exact-art-wrap--maps{position:relative}
+/* The old overlap and top-of-page masking caused duplicated arches.
+   Gentle tint only in the outer 3–4% of each approved artwork blends
+   its edge into a twilight bridge, without altering its text. */
+.exact-art-wrap::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  box-shadow:none;
+  background:transparent;
+}
+.exact-stage:nth-of-type(1) .exact-art-wrap::after {
+  background:linear-gradient(to top, var(--bridge-out) 0%,rgba(111,75,95,.0) 3.4%);
+}
+.exact-stage:nth-of-type(2) .exact-art-wrap::after {
+  background:linear-gradient(to bottom,var(--bridge-in) 0%,rgba(109,73,96,0) 3.5%),
+             linear-gradient(to top,var(--bridge-out) 0%,rgba(111,75,95,0) 3.4%);
+}
+.exact-stage:nth-of-type(3) .exact-art-wrap::after {
+  background:linear-gradient(to bottom,var(--bridge-in) 0%,rgba(109,73,96,0) 3.5%);
+}
+/* An intentional visual breath between two complete arches: no overlap,
+   no second arch drawn on top of the preceding page's floral footer. */
+.regal-bridge {
+  width:100%;
+  height:clamp(108px,25vw,160px);
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(180deg,var(--bridge-out) 0%,#604159 27%,var(--bridge-mid) 52%,#5e4059 74%,var(--bridge-in) 100%);
+}
+.regal-bridge::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse 40% 40% at 50% 50%,rgba(239,181,124,.085),transparent 80%);
+}
+.regal-bridge::after{
+  content:"";
+  position:absolute;
+  top:50%;left:19%;right:19%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(226,178,118,.45) 13%,rgba(226,178,118,.45) 42%,transparent 46%,transparent 54%,rgba(226,178,118,.45) 58%,rgba(226,178,118,.45) 87%,transparent);
+  transform:translateY(-50%);
+}
+.regal-bridge__gem{
+  position:absolute;
+  z-index:1;
+  top:50%;left:50%;
+  width:10px;height:10px;
+  border:1px solid rgba(238,194,132,.86);
+  transform:translate(-50%,-50%) rotate(45deg);
+}
 .exact-map-hotspot{
   position:absolute;
-  left:10.8%;
-  right:10.8%;
-  top:86.0%;
-  height:7.0%;
+  left:10.8%;right:10.8%;top:86%;height:7%;
+  z-index:6;
   border-radius:999px;
-  text-decoration:none;
   background:transparent;
-  z-index:5;
+  text-decoration:none;
 }
 .exact-map-hotspot:focus-visible{
   outline:3px solid rgba(255,248,224,.95);
   outline-offset:2px;
 }
-@media (max-width:420px){
-  .exact-stage + .exact-stage{margin-top:-44px}
+@media (prefers-reduced-motion:reduce) {
+  .exact-art-wrap {transition:none}
 }
