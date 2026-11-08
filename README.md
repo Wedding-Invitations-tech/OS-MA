@@ -1,18 +1,21 @@
-# Regal Plum Continuum — corrected framing and Maps link
+# Regal Plum Continuum — balanced side edges
 
-The three scene images are reconstructed from the full approved design board,
-resampled to a consistent 480:973 frame without artificial colour bars.
-Their native aspect ratio is retained with `object-fit: contain` so no sides are cropped.
+This website preserves the original envelope, the six-second opening sequence and automatic opening after 3 seconds of inactivity.
 
-A persistent ornamental gold frame overlays the scene transitions, and the Google Maps
-button is a real HTML link with the click target aligned to the visible button.
-The original envelope opening, 3-second auto-open and scroll-based scene transitions
-have been retained.
+The three page illustrations have been reworked to make the outer gold architectural borders balanced on both the left and right. The duplicate transparent frame was removed, because it caused extra arches and ghost details during transitions. The scroll experience still cross-fades smoothly among the invitation, date/location, and programme.
 
-Run locally with `python -m http.server 8000`, then open `http://localhost:8000`.
+The Le Ciel Google Maps hotspot is a clickable HTML anchor aligned with the button shown on the second illustration. Its URL is configured in `config.js`.
 
-The lettering in the approved AI-generated art is rasterised and cannot be edited as text;
-proofread Arabic text carefully before sharing invitations.
+## Run locally
 
-## Verification
-The map hotspot was clicked successfully in a local browser test at 320, 390, 430, 620 and 1280 pixel widths. No JavaScript errors or horizontal overflow were detected. Manual envelope opening was also checked.
+```sh
+python -m http.server 8000
+```
+
+Open `http://localhost:8000` and scroll after opening the envelope.
+
+## Important
+
+The Arabic text is embedded in the source illustration rather than editable HTML. Please proofread all the wording against your approved invitation before sharing widely.
+
+The `previews` directory includes static PNGs (not used by the website itself).

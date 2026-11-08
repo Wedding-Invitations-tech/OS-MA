@@ -186,9 +186,6 @@ body.plum-body{
   .continuum-map-hotspot{transition:none}
 }
 
-/* A persistent, non-interactive gold frame keeps the arches and ornamental
-   side rails aligned through every transition. */
-.continuum-frame{position:absolute;inset:0;z-index:7;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none;}
 .continuum-map-hotspot{z-index:12;opacity:1;visibility:hidden;pointer-events:none;}
 .continuum-map-hotspot.is-active{visibility:visible;pointer-events:auto;}
 .continuum-map-hotspot:focus-visible{outline:3px solid #ffe6af;outline-offset:2px;}
@@ -201,3 +198,6 @@ body.plum-body{
 
 /* Keep the gold floral footer unobstructed by interface copy. */
 .scene-hint{display:none}
+
+/* Keep the artwork edges fully visible; no overlapping transparent frame. */
+.continuum-canvas{box-shadow:0 22px 90px rgba(15,6,14,.28),inset 0 0 0 1px rgba(240,202,140,.12)}
