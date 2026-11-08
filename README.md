@@ -19,3 +19,8 @@ Open `http://localhost:8000` and scroll after opening the envelope.
 The Arabic text is embedded in the source illustration rather than editable HTML. Please proofread all the wording against your approved invitation before sharing widely.
 
 The `previews` directory includes static PNGs (not used by the website itself).
+
+## Latest refinements
+- Replaced flat outer margins with softly extended artwork matching the current page. The main artwork stays fully visible with its original proportions.
+- Corrected the Google Maps button click area on Page 2 and added a short 3px pressed/sink animation.
+- Kept the original Google Maps destination, envelope, three-second auto-opening, scroll timing and source artwork unchanged.

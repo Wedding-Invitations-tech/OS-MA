@@ -20,6 +20,7 @@
   <link rel="preload" as="image" href="assets/continuum-scene-3.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="regal-plum-continuum.css" />
+  <link rel="stylesheet" href="finishing-touches.css" />
   <script src="config.js" defer></script>
   <script src="script.js" defer></script>
 </head>
@@ -30,6 +31,11 @@
     <div class="continuum-scroll" id="continuumScroll">
       <div class="continuum-sticky">
         <div class="continuum-backdrop" aria-hidden="true">
+          <!-- Full-bleed extensions of the same approved artwork; central page remains uncropped. -->
+          <img class="ambient-scene ambient-scene--1" src="assets/continuum-scene-1.png" alt="" />
+          <img class="ambient-scene ambient-scene--2" src="assets/continuum-scene-2.png" alt="" />
+          <img class="ambient-scene ambient-scene--3" src="assets/continuum-scene-3.png" alt="" />
+          <span class="ambient-soften"></span>
           <span class="backdrop-glow backdrop-glow--top"></span>
           <span class="backdrop-glow backdrop-glow--bottom"></span>
           <span class="backdrop-palm backdrop-palm--left"></span>
@@ -40,7 +46,9 @@
           <img class="scene-layer scene-layer--1 is-visible" src="assets/continuum-scene-1.png" alt="المشهد الأول: الدعوة" fetchpriority="high" decoding="async" />
           <img class="scene-layer scene-layer--2" src="assets/continuum-scene-2.png" alt="المشهد الثاني: التاريخ والمكان" loading="lazy" decoding="async" />
           <img class="scene-layer scene-layer--3" src="assets/continuum-scene-3.png" alt="المشهد الثالث: برنامج الحفل" loading="lazy" decoding="async" />
-          <a id="mapsLink" class="continuum-map-hotspot" href="#" aria-label="افتح موقع Le Ciel Hotel على خرائط Google" aria-disabled="true"></a>
+          <a id="mapsLink" class="continuum-map-hotspot" href="#" aria-label="افتح موقع Le Ciel Hotel على خرائط Google" aria-disabled="true">
+            <span class="map-button-visual" aria-hidden="true"></span>
+          </a>
           <div class="scene-progress" aria-hidden="true">
             <span class="scene-progress__dot is-active" data-progress-dot="0"></span>
             <span class="scene-progress__dot" data-progress-dot="1"></span>

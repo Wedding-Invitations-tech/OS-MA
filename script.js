@@ -58,12 +58,40 @@
     }
   }
 
+  // Provide a tactile press on touch, mouse and keyboard while preserving the
+  // browser's native target=_blank link (no navigation delay or interception).
+  if (mapsLink) {
+    let releaseTimer;
+    const press = () => {
+      window.clearTimeout(releaseTimer);
+      mapsLink.classList.add('is-pressed');
+    };
+    const release = () => {
+      window.clearTimeout(releaseTimer);
+      releaseTimer = window.setTimeout(() => mapsLink.classList.remove('is-pressed'), 180);
+    };
+    mapsLink.addEventListener('pointerdown', press);
+    mapsLink.addEventListener('pointerup', release);
+    mapsLink.addEventListener('pointercancel', release);
+    mapsLink.addEventListener('pointerleave', release);
+    mapsLink.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') press();
+    });
+    mapsLink.addEventListener('keyup', release);
+    mapsLink.addEventListener('blur', release);
+  }
+
   const scroller = document.getElementById('continuumScroll');
   const canvas = document.getElementById('continuumCanvas');
   const layers = [
     document.querySelector('.scene-layer--1'),
     document.querySelector('.scene-layer--2'),
     document.querySelector('.scene-layer--3')
+  ].filter(Boolean);
+  const ambientLayers = [
+    document.querySelector('.ambient-scene--1'),
+    document.querySelector('.ambient-scene--2'),
+    document.querySelector('.ambient-scene--3')
   ].filter(Boolean);
   const dots = [...document.querySelectorAll('[data-progress-dot]')];
   const hint = document.getElementById('sceneHint');
@@ -106,6 +134,11 @@
       layer.style.transform = `translateY(${lift.toFixed(2)}px) scale(${scale.toFixed(4)})`;
       layer.style.filter = `saturate(${(1.01 + opacity * 0.02).toFixed(3)}) brightness(${(0.97 + opacity * 0.05).toFixed(3)})`;
       layer.classList.toggle('is-visible', opacity > 0.015);
+    });
+
+    // Side/backdrop imagery follows the same cross-fade as the three pages.
+    ambientLayers.forEach((layer, index) => {
+      layer.style.opacity = ops[index].toFixed(4);
     });
 
     const dominantIndex = o3 > 0.5 ? 2 : o2 > 0.5 ? 1 : 0;
