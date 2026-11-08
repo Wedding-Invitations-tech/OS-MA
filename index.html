@@ -43,12 +43,21 @@
         </div>
 
         <div class="continuum-canvas" id="continuumCanvas" data-scene="1">
+          <!-- Seam-matched edge artwork: fills the side gutters without cropping or scaling the invitation. -->
+          <img class="edge-bleed edge-bleed--left edge-bleed--1" src="assets/scene-1-left-edge.png" alt="" aria-hidden="true" />
+          <img class="edge-bleed edge-bleed--right edge-bleed--1" src="assets/scene-1-right-edge.png" alt="" aria-hidden="true" />
+          <img class="edge-bleed edge-bleed--left edge-bleed--2" src="assets/scene-2-left-edge.png" alt="" aria-hidden="true" />
+          <img class="edge-bleed edge-bleed--right edge-bleed--2" src="assets/scene-2-right-edge.png" alt="" aria-hidden="true" />
+          <img class="edge-bleed edge-bleed--left edge-bleed--3" src="assets/scene-3-left-edge.png" alt="" aria-hidden="true" />
+          <img class="edge-bleed edge-bleed--right edge-bleed--3" src="assets/scene-3-right-edge.png" alt="" aria-hidden="true" />
           <img class="scene-layer scene-layer--1 is-visible" src="assets/continuum-scene-1.png" alt="المشهد الأول: الدعوة" fetchpriority="high" decoding="async" />
           <img class="scene-layer scene-layer--2" src="assets/continuum-scene-2.png" alt="المشهد الثاني: التاريخ والمكان" loading="lazy" decoding="async" />
           <img class="scene-layer scene-layer--3" src="assets/continuum-scene-3.png" alt="المشهد الثالث: برنامج الحفل" loading="lazy" decoding="async" />
-          <a id="mapsLink" class="continuum-map-hotspot" href="#" aria-label="افتح موقع Le Ciel Hotel على خرائط Google" aria-disabled="true">
-            <span class="map-button-visual" aria-hidden="true"></span>
-          </a>
+          <div class="map-placement">
+            <a id="mapsLink" class="continuum-map-hotspot" href="#" aria-label="افتح موقع Le Ciel Hotel على خرائط Google" aria-disabled="true">
+              <span class="map-button-visual" aria-hidden="true"></span>
+            </a>
+          </div>
           <div class="scene-progress" aria-hidden="true">
             <span class="scene-progress__dot is-active" data-progress-dot="0"></span>
             <span class="scene-progress__dot" data-progress-dot="1"></span>

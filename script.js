@@ -93,6 +93,9 @@
     document.querySelector('.ambient-scene--2'),
     document.querySelector('.ambient-scene--3')
   ].filter(Boolean);
+  const edgeLayers = [1, 2, 3].map(index =>
+    [...document.querySelectorAll(`.edge-bleed--${index}`)]
+  );
   const dots = [...document.querySelectorAll('[data-progress-dot]')];
   const hint = document.getElementById('sceneHint');
 
@@ -139,6 +142,12 @@
     // Side/backdrop imagery follows the same cross-fade as the three pages.
     ambientLayers.forEach((layer, index) => {
       layer.style.opacity = ops[index].toFixed(4);
+    });
+    edgeLayers.forEach((pair, index) => {
+      pair.forEach(edge => {
+        edge.style.opacity = ops[index].toFixed(4);
+        edge.style.filter = layers[index].style.filter;
+      });
     });
 
     const dominantIndex = o3 > 0.5 ? 2 : o2 > 0.5 ? 1 : 0;

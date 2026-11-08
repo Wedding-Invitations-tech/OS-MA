@@ -89,3 +89,52 @@
 @media (prefers-reduced-motion: reduce) {
   .ambient-scene, .map-button-visual { transition:none; }
 }
+
+/* Final responsive edge-to-edge finish.
+   The artwork's natural 941:1672 ratio is never altered. For a short mobile
+   viewport, match the narrow side gutters to the artwork with mirrored,
+   edge-continuous 48px strips instead of leaving a coloured letterbox. */
+.map-placement {
+  position:absolute;
+  inset:0;
+  z-index:20;
+  pointer-events:none;
+}
+.edge-bleed { display:none; }
+
+@media (max-width:620px) {
+  .continuum-canvas {
+    width:100vw;
+    height:100svh;
+    max-width:none;
+    max-height:none;
+    aspect-ratio:auto;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .scene-layer {
+    object-fit:contain;
+  }
+  .edge-bleed {
+    display:block;
+    position:absolute;
+    top:50%;
+    height:min(100svh, calc(100vw * 1672 / 941));
+    width:max(0px, calc((100vw - min(100vw, calc(100svh * 941 / 1672))) / 2 + 1px));
+    transform:translateY(-50%);
+    object-fit:fill;
+    pointer-events:none;
+    opacity:0;
+    z-index:0;
+  }
+  .edge-bleed--left { left:0; }
+  .edge-bleed--right { right:0; }
+  .map-placement {
+    inset:auto;
+    left:50%;
+    top:50%;
+    width:min(100vw, calc(100svh * 941 / 1672));
+    height:min(100svh, calc(100vw * 1672 / 941));
+    transform:translate(-50%,-50%);
+  }
+}

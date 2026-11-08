@@ -24,3 +24,8 @@ The `previews` directory includes static PNGs (not used by the website itself).
 - Replaced flat outer margins with softly extended artwork matching the current page. The main artwork stays fully visible with its original proportions.
 - Corrected the Google Maps button click area on Page 2 and added a short 3px pressed/sink animation.
 - Kept the original Google Maps destination, envelope, three-second auto-opening, scroll timing and source artwork unchanged.
+
+## Edge-to-edge mobile finish
+- Full-width mobile scenes with no flat side gutters.
+- Scene-specific edge extensions match the original illustration; no change to central art, aspect ratio, Arabic lettering, or envelope.
+- The Google Maps hitbox remains aligned with the gold button via the inner-art placement wrapper.
