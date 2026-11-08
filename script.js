@@ -42,8 +42,8 @@
 
   const config = window.INVITATION_CONFIG || {};
   const mapsLink = document.getElementById('mapsLink');
+  let validMapsUrl = null;
   if (mapsLink && typeof config.googleMapsUrl === 'string') {
-    let validMapsUrl = null;
     try {
       const url = new URL(config.googleMapsUrl);
       const hostname = url.hostname.toLowerCase();
@@ -100,8 +100,8 @@
     const ops = [o1, o2, o3];
     layers.forEach((layer, index) => {
       const opacity = ops[index];
-      const lift = index === 0 ? -14 * t12 : index === 1 ? (14 * (1 - t12) - 14 * t23) : 14 * (1 - t23);
-      const scale = 1 + (0.016 * (1 - opacity));
+      const lift = 0;
+      const scale = 1;
       layer.style.opacity = opacity.toFixed(4);
       layer.style.transform = `translateY(${lift.toFixed(2)}px) scale(${scale.toFixed(4)})`;
       layer.style.filter = `saturate(${(1.01 + opacity * 0.02).toFixed(3)}) brightness(${(0.97 + opacity * 0.05).toFixed(3)})`;
@@ -112,7 +112,7 @@
     canvas.dataset.scene = String(dominantIndex + 1);
     dots.forEach((dot, index) => dot.classList.toggle('is-active', index === dominantIndex));
 
-    if (mapsLink) mapsLink.classList.toggle('is-active', o2 > 0.42 && o3 < 0.42);
+    if (mapsLink) mapsLink.classList.toggle('is-active', dominantIndex === 1 && !!validMapsUrl);
     if (hint) hint.classList.toggle('is-hidden', progress > 0.08);
   }
 

@@ -84,8 +84,8 @@ body.plum-body{
 .backdrop-palm--right{right:max(2vw,8px);transform:rotate(-12deg)}
 
 .continuum-canvas{
-  width:min(var(--stage-width), calc(100svh / 1.8565));
-  aspect-ratio:467 / 867;
+  width:min(var(--stage-width), calc(100svh * 480 / 973));
+  aspect-ratio:480 / 973;
   height:auto;
   max-height:100svh;
   margin-inline:auto;
@@ -100,7 +100,7 @@ body.plum-body{
   inset:0;
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   opacity:0;
   transform:translateY(18px) scale(1.015);
   transform-origin:50% 50%;
@@ -115,10 +115,10 @@ body.plum-body{
 
 .continuum-map-hotspot{
   position:absolute;
-  left:11.5%;
-  right:11.5%;
-  top:83.2%;
-  height:6.8%;
+  left:14%;
+  right:8%;
+  top:85.3%;
+  height:6.3%;
   z-index:8;
   border-radius:999px;
   background:transparent;
@@ -134,7 +134,7 @@ body.plum-body{
 
 .scene-progress{
   position:absolute;
-  top:max(env(safe-area-inset-top), 18px);
+  top:max(env(safe-area-inset-top), 8px);
   left:50%;
   transform:translateX(-50%);
   z-index:10;
@@ -142,7 +142,7 @@ body.plum-body{
   gap:10px;
   padding:8px 12px;
   border-radius:999px;
-  background:rgba(54,24,43,.24);
+  background:rgba(54,24,43,.08);
   backdrop-filter:blur(8px);
   box-shadow:0 10px 28px rgba(19,8,18,.15);
 }
@@ -174,7 +174,7 @@ body.plum-body{
 .scene-step--tail{height:72svh}
 
 @media (max-width:620px){
-  .continuum-canvas{width:min(100vw, calc(100svh / 1.8565))}
+  .continuum-canvas{width:min(100vw, calc(100svh * 480 / 973))}
 }
 @media (min-width:621px){
   .continuum-canvas{border-radius:10px}
@@ -185,3 +185,19 @@ body.plum-body{
   .scene-hint,
   .continuum-map-hotspot{transition:none}
 }
+
+/* A persistent, non-interactive gold frame keeps the arches and ornamental
+   side rails aligned through every transition. */
+.continuum-frame{position:absolute;inset:0;z-index:7;width:100%;height:100%;object-fit:fill;pointer-events:none;user-select:none;-webkit-user-drag:none;}
+.continuum-map-hotspot{z-index:12;opacity:1;visibility:hidden;pointer-events:none;}
+.continuum-map-hotspot.is-active{visibility:visible;pointer-events:auto;}
+.continuum-map-hotspot:focus-visible{outline:3px solid #ffe6af;outline-offset:2px;}
+.continuum-canvas{background:#56324c;}
+.scene-layer{transform-origin:center center;}
+@media (max-width:620px){.continuum-canvas{border-radius:0}}
+
+/* The arch crest is intentionally unobstructed. */
+.scene-progress{display:none}
+
+/* Keep the gold floral footer unobstructed by interface copy. */
+.scene-hint{display:none}
