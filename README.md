@@ -34,8 +34,8 @@ The `previews` directory includes static PNGs (not used by the website itself).
 ## Automatic scene rotation
 
 Once the original envelope-opening sequence finishes, the invitation advances
-automatically: Scene 1 for 12 seconds, Scene 2 for 5 seconds, Scene 3 for
-5 seconds, and repeats. Each change is a 1.3-second cross-fade.
+automatically: Scene 1 for 12 seconds, Scene 2 for 8 seconds, Scene 3 for
+8 seconds, and repeats. Each change is a 1.3-second cross-fade.
 
 Visitors can still scroll or swipe manually. A gesture pauses automatic
 rotation; after 12 seconds without interaction, rotation resumes from the
@@ -43,3 +43,11 @@ current scene. Rotation pauses when the browser tab is in the background.
 
 The Scene 2 Google Maps click target and pressed-state artwork are aligned
 with the current Scene 2 image. The destination URL remains unchanged.
+
+## Discreet swipe cue
+
+The Arabic "اسحب للأعلى" labels were removed from the Scene 1 and Scene 2 illustrations. A small, transparent-background, champagne-gold three-chevron CSS animation (modelled on the supplied reference GIF) appears only during the final 3 seconds of each automatic hold. It is not displayed on Scene 3, during the envelope opening, or while a visitor manually scrolls. Scene timings are 12 / 8 / 8 seconds; cross-fades and automatic opening are unchanged.
+
+
+### Final position alignment
+Scenes 1 and 2 use the supplied updated image assets (red annotation marks removed). The three gold swipe chevrons display in the clear area below each final floral divider, and the Scene 2 Google Maps hit area and pressed-face graphic are aligned with the moved button. All timing and transitions remain unchanged.

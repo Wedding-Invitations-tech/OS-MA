@@ -58,6 +58,17 @@
               <span class="map-button-visual" aria-hidden="true"></span>
             </a>
           </div>
+          <!-- Brief upward-swipe cue; only visible during the last 3 seconds
+               before an automatic transition from Scene 1 or Scene 2. -->
+          <div class="swipe-cue-placement" aria-hidden="true">
+            <div id="swipeCue" class="swipe-cue">
+              <svg viewBox="0 0 76 100" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                <path class="swipe-chevron swipe-chevron--1" d="M14 27 L38 7 L62 27" />
+                <path class="swipe-chevron swipe-chevron--2" d="M14 56 L38 36 L62 56" />
+                <path class="swipe-chevron swipe-chevron--3" d="M14 85 L38 65 L62 85" />
+              </svg>
+            </div>
+          </div>
           <div class="scene-progress" aria-hidden="true">
             <span class="scene-progress__dot is-active" data-progress-dot="0"></span>
             <span class="scene-progress__dot" data-progress-dot="1"></span>

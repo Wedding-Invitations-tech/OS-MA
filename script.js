@@ -99,11 +99,13 @@
   );
   const dots = [...document.querySelectorAll('[data-progress-dot]')];
   const hint = document.getElementById('sceneHint');
+  const swipeCue = document.getElementById('swipeCue');
 
-  // Automatic presentation: holds of 12 / 5 / 5 seconds, then loops.
+  // Automatic presentation: holds of 12 / 8 / 8 seconds, then loops.
   // The existing scroll-driven presentation remains available immediately
   // when a visitor swipes, wheels, or uses the keyboard.
-  const SCENE_HOLD_MS = [12000, 5000, 5000];
+  const SCENE_HOLD_MS = [12000, 8000, 8000];
+  const SWIPE_CUE_MS = 3000;
   const TRANSITION_MS = 1300;
   const MANUAL_IDLE_MS = 12000;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -112,6 +114,7 @@
   let currentScene = 0;
   let currentWeights = [1, 0, 0];
   let holdTimer = null;
+  let cueTimer = null;
   let resumeTimer = null;
   let fadeFrame = null;
   let frameId = null;
@@ -184,6 +187,9 @@
   function stopAutoTimers() {
     window.clearTimeout(holdTimer);
     holdTimer = null;
+    window.clearTimeout(cueTimer);
+    cueTimer = null;
+    swipeCue?.classList.remove('is-visible');
     if (fadeFrame !== null) window.cancelAnimationFrame(fadeFrame);
     fadeFrame = null;
   }
@@ -200,11 +206,23 @@
   function scheduleHold() {
     stopAutoTimers();
     if (!autoMode || document.hidden) return;
-    holdTimer = window.setTimeout(advanceAutoScene, SCENE_HOLD_MS[currentScene]);
+    const duration = SCENE_HOLD_MS[currentScene];
+    // Display the cue only over Scenes 1 and 2, and only in their last 3 seconds.
+    if (currentScene < 2) {
+      cueTimer = window.setTimeout(() => {
+        if (autoMode && !document.hidden && currentScene < 2) {
+          swipeCue?.classList.add('is-visible');
+        }
+      }, duration - SWIPE_CUE_MS);
+    }
+    holdTimer = window.setTimeout(advanceAutoScene, duration);
   }
 
   function advanceAutoScene() {
     if (!autoMode || document.hidden) return;
+    window.clearTimeout(cueTimer);
+    cueTimer = null;
+    swipeCue?.classList.remove('is-visible');
     const from = currentScene;
     const to = (from + 1) % 3;
     const startWeights = [...currentWeights];
