@@ -45,13 +45,13 @@
 /* Previous ornamental pseudo-palms were visible over otherwise clean artwork. */
 .backdrop-palm, .backdrop-glow { display:none; }
 
-/* Align interactive area to the actual baked gold button:
-   approved artwork pixel rectangle x=206..716, y=1325..1406 on 941x1672. */
+/* Hit area aligned to the ACTUAL replacement Scene 2 artwork:
+   button x=215..727 and y=1318..1390 on 941x1670. */
 .continuum-map-hotspot {
-  left: 21.892%;
-  right: 23.911%;
-  top: 79.246%;
-  height: 4.844%;
+  left: 22.85%;
+  right: 22.75%;
+  top: 78.92%;
+  height: 4.31%;
   overflow: visible;
   cursor: pointer;
   text-decoration: none;
@@ -96,7 +96,13 @@
    edge-continuous 48px strips instead of leaving a coloured letterbox. */
 .map-placement {
   position:absolute;
-  inset:0;
+  inset:auto;
+  left:50%;
+  top:50%;
+  width:min(100%, calc(100svh * 941 / 1670));
+  height:auto;
+  aspect-ratio:941 / 1670;
+  transform:translate(-50%,-50%);
   z-index:20;
   pointer-events:none;
 }
@@ -130,11 +136,14 @@
   .edge-bleed--left { left:0; }
   .edge-bleed--right { right:0; }
   .map-placement {
-    inset:auto;
-    left:50%;
-    top:50%;
-    width:min(100vw, calc(100svh * 941 / 1672));
-    height:min(100svh, calc(100vw * 1672 / 941));
-    transform:translate(-50%,-50%);
+    width:min(100vw, calc(100svh * 941 / 1670));
   }
+}
+
+/* Cross-fades are driven by JS on each animation frame. CSS opacity
+   transitions would lag the frame values and produce translucent ghost text. */
+.scene-layer,
+.ambient-scene,
+.edge-bleed {
+  transition: none !important;
 }

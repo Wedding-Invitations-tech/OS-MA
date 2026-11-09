@@ -29,3 +29,17 @@ The `previews` directory includes static PNGs (not used by the website itself).
 - Full-width mobile scenes with no flat side gutters.
 - Scene-specific edge extensions match the original illustration; no change to central art, aspect ratio, Arabic lettering, or envelope.
 - The Google Maps hitbox remains aligned with the gold button via the inner-art placement wrapper.
+
+
+## Automatic scene rotation
+
+Once the original envelope-opening sequence finishes, the invitation advances
+automatically: Scene 1 for 12 seconds, Scene 2 for 5 seconds, Scene 3 for
+5 seconds, and repeats. Each change is a 1.3-second cross-fade.
+
+Visitors can still scroll or swipe manually. A gesture pauses automatic
+rotation; after 12 seconds without interaction, rotation resumes from the
+current scene. Rotation pauses when the browser tab is in the background.
+
+The Scene 2 Google Maps click target and pressed-state artwork are aligned
+with the current Scene 2 image. The destination URL remains unchanged.

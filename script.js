@@ -21,6 +21,7 @@
       envelope.setAttribute('aria-hidden', 'true');
       openButton?.setAttribute('tabindex', '-1');
       openButton?.blur();
+      startAutoCycle();
     }, OPEN_SEQUENCE_MS);
   }
 
@@ -99,73 +100,191 @@
   const dots = [...document.querySelectorAll('[data-progress-dot]')];
   const hint = document.getElementById('sceneHint');
 
+  // Automatic presentation: holds of 12 / 5 / 5 seconds, then loops.
+  // The existing scroll-driven presentation remains available immediately
+  // when a visitor swipes, wheels, or uses the keyboard.
+  const SCENE_HOLD_MS = [12000, 5000, 5000];
+  const TRANSITION_MS = 1300;
+  const MANUAL_IDLE_MS = 12000;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let autoStarted = false;
+  let autoMode = false;
+  let currentScene = 0;
+  let currentWeights = [1, 0, 0];
+  let holdTimer = null;
+  let resumeTimer = null;
+  let fadeFrame = null;
+  let frameId = null;
+
   function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
   function smoothstep(edge0, edge1, x) {
     const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
     return t * t * (3 - 2 * t);
   }
+  function oneHot(scene) { return [0, 1, 2].map(index => index === scene ? 1 : 0); }
+  function mostVisible(weights) {
+    return weights.indexOf(Math.max(...weights));
+  }
 
-  let ticking = false;
-  function updateContinuum() {
-    ticking = false;
-    if (!scroller || layers.length < 3 || !canvas) return;
-
-    const scrollTop = -scroller.getBoundingClientRect().top;
-    const step = Math.max(window.innerHeight * 1.02, 420);
-    const progress = clamp(scrollTop / step, 0, 2);
-
-    let o1 = 1, o2 = 0, o3 = 0;
-    let t12 = 0, t23 = 0;
-    if (progress < 1) {
-      t12 = smoothstep(0.12, 0.88, progress);
-      o1 = 1 - t12;
-      o2 = t12;
-      o3 = 0;
-    } else {
-      t23 = smoothstep(1.12, 1.88, progress);
-      o1 = 0;
-      o2 = 1 - t23;
-      o3 = t23;
-    }
-
-    const ops = [o1, o2, o3];
+  function renderScene(weights) {
+    if (!canvas || layers.length !== 3) return;
+    currentWeights = weights;
     layers.forEach((layer, index) => {
-      const opacity = ops[index];
-      const lift = 0;
-      const scale = 1;
+      const opacity = weights[index];
       layer.style.opacity = opacity.toFixed(4);
-      layer.style.transform = `translateY(${lift.toFixed(2)}px) scale(${scale.toFixed(4)})`;
+      // Fixed geometry prevents the gold arch and map hotspot drifting.
+      layer.style.transform = 'translateY(0) scale(1)';
       layer.style.filter = `saturate(${(1.01 + opacity * 0.02).toFixed(3)}) brightness(${(0.97 + opacity * 0.05).toFixed(3)})`;
       layer.classList.toggle('is-visible', opacity > 0.015);
     });
-
-    // Side/backdrop imagery follows the same cross-fade as the three pages.
     ambientLayers.forEach((layer, index) => {
-      layer.style.opacity = ops[index].toFixed(4);
+      layer.style.opacity = weights[index].toFixed(4);
     });
     edgeLayers.forEach((pair, index) => {
       pair.forEach(edge => {
-        edge.style.opacity = ops[index].toFixed(4);
+        edge.style.opacity = weights[index].toFixed(4);
         edge.style.filter = layers[index].style.filter;
       });
     });
 
-    const dominantIndex = o3 > 0.5 ? 2 : o2 > 0.5 ? 1 : 0;
-    canvas.dataset.scene = String(dominantIndex + 1);
-    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === dominantIndex));
-
-    if (mapsLink) mapsLink.classList.toggle('is-active', dominantIndex === 1 && !!validMapsUrl);
-    if (hint) hint.classList.toggle('is-hidden', progress > 0.08);
+    const dominant = mostVisible(weights);
+    canvas.dataset.scene = String(dominant + 1);
+    dots.forEach((dot, index) => dot.classList.toggle('is-active', index === dominant));
+    // Only the fully revealed venue page gets an interactive map button.
+    if (mapsLink) mapsLink.classList.toggle('is-active', weights[1] >= 0.90 && !!validMapsUrl);
+    if (hint) hint.classList.toggle('is-hidden', autoStarted || window.scrollY > 20);
   }
 
-  function requestUpdate() {
-    if (!ticking) {
-      ticking = true;
-      window.requestAnimationFrame(updateContinuum);
+  function manualProgress() {
+    if (!scroller) return 0;
+    const scrollTop = -scroller.getBoundingClientRect().top;
+    const step = Math.max(window.innerHeight * 1.02, 420);
+    return clamp(scrollTop / step, 0, 2);
+  }
+
+  function renderManual() {
+    const progress = manualProgress();
+    if (progress < 1) {
+      const blend = smoothstep(0.12, 0.88, progress);
+      renderScene([1 - blend, blend, 0]);
+    } else {
+      const blend = smoothstep(1.12, 1.88, progress);
+      renderScene([0, 1 - blend, blend]);
     }
   }
 
-  window.addEventListener('scroll', requestUpdate, { passive: true });
-  window.addEventListener('resize', requestUpdate);
-  updateContinuum();
+  function requestManualRender() {
+    if (autoMode || frameId !== null) return;
+    frameId = window.requestAnimationFrame(() => {
+      frameId = null;
+      if (!autoMode) renderManual();
+    });
+  }
+
+  function stopAutoTimers() {
+    window.clearTimeout(holdTimer);
+    holdTimer = null;
+    if (fadeFrame !== null) window.cancelAnimationFrame(fadeFrame);
+    fadeFrame = null;
+  }
+
+  // Keep the original manual scroll positions in sync with auto mode.
+  // This lets a guest take over with a swipe without jumping to another page.
+  function syncScrollToScene(scene) {
+    if (!scroller) return;
+    const start = scroller.getBoundingClientRect().top + window.scrollY;
+    const step = Math.max(window.innerHeight * 1.02, 420);
+    window.scrollTo({ top: start + step * scene, behavior: 'instant' });
+  }
+
+  function scheduleHold() {
+    stopAutoTimers();
+    if (!autoMode || document.hidden) return;
+    holdTimer = window.setTimeout(advanceAutoScene, SCENE_HOLD_MS[currentScene]);
+  }
+
+  function advanceAutoScene() {
+    if (!autoMode || document.hidden) return;
+    const from = currentScene;
+    const to = (from + 1) % 3;
+    const startWeights = [...currentWeights];
+    const endWeights = oneHot(to);
+    const duration = reducedMotion.matches ? 1 : TRANSITION_MS;
+    let began = null;
+    syncScrollToScene(to);
+
+    const tick = (now) => {
+      if (!autoMode || document.hidden) return;
+      if (began === null) began = now;
+      const t = smoothstep(0, 1, (now - began) / duration);
+      renderScene(startWeights.map((weight, index) => weight * (1 - t) + endWeights[index] * t));
+      if (t < 1) {
+        fadeFrame = window.requestAnimationFrame(tick);
+      } else {
+        fadeFrame = null;
+        currentScene = to;
+        renderScene(endWeights);
+        scheduleHold();
+      }
+    };
+    fadeFrame = window.requestAnimationFrame(tick);
+  }
+
+  function startAutoCycle() {
+    if (!scroller || !canvas || layers.length !== 3) return;
+    autoStarted = true;
+    autoMode = true;
+    window.clearTimeout(resumeTimer);
+    stopAutoTimers();
+    // Visitors begin at the invitation (not part way through a prior scroll).
+    currentScene = 0;
+    syncScrollToScene(0);
+    renderScene(oneHot(0));
+    scheduleHold();
+  }
+
+  // Real interactions take priority over automatic presentation.
+  function visitorTookControl() {
+    if (!autoStarted || body.classList.contains('is-locked') || document.hidden) return;
+    stopAutoTimers();
+    autoMode = false;
+    window.clearTimeout(resumeTimer);
+    requestManualRender();
+    // Resume from the page the guest actually reached, once they are idle.
+    resumeTimer = window.setTimeout(() => {
+      if (document.hidden || body.classList.contains('is-locked')) return;
+      currentScene = mostVisible(currentWeights);
+      autoMode = true;
+      syncScrollToScene(currentScene);
+      renderScene(oneHot(currentScene));
+      scheduleHold();
+    }, MANUAL_IDLE_MS);
+  }
+
+  window.addEventListener('wheel', visitorTookControl, { passive: true });
+  window.addEventListener('touchstart', visitorTookControl, { passive: true });
+  window.addEventListener('pointerdown', event => {
+    if (event.target.closest?.('#mapsLink')) visitorTookControl();
+  }, { passive: true });
+  window.addEventListener('keydown', event => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ', 'Spacebar'].includes(event.key)) visitorTookControl();
+  });
+  window.addEventListener('scroll', requestManualRender, { passive: true });
+  window.addEventListener('resize', () => {
+    if (autoMode) syncScrollToScene(currentScene);
+    else requestManualRender();
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoTimers();
+      window.clearTimeout(resumeTimer);
+    } else if (autoStarted) {
+      autoMode = true;
+      currentScene = mostVisible(currentWeights);
+      syncScrollToScene(currentScene);
+      renderScene(oneHot(currentScene));
+      scheduleHold();
+    }
+  });
+  renderManual();
 })();
