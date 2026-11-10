@@ -51,3 +51,32 @@ The Arabic "اسحب للأعلى" labels were removed from the Scene 1 and Scen
 
 ### Final position alignment
 Scenes 1 and 2 use the supplied updated image assets (red annotation marks removed). The three gold swipe chevrons display in the clear area below each final floral divider, and the Scene 2 Google Maps hit area and pressed-face graphic are aligned with the moved button. All timing and transitions remain unchanged.
+
+
+## Optional soundtrack (two complete rotations)
+
+The wedding soundtrack player is implemented but the referenced commercial
+recording has not been included. Obtain an audio file you have permission to
+use on a public wedding website and save it here:
+
+    assets/music/wedding-soundtrack.mp3
+
+The reference song is "A Love for Life" by Yanni:
+https://youtu.be/LlVee-6EOAI
+
+Once the file exists:
+- The browser attempts to start playback as the page loads, before the envelope opens.
+- If sound autoplay is blocked (common on iOS/Android), a discreet upper-left
+  "تشغيل الموسيقى" button is displayed. Tapping the original seal can also start it.
+- The envelope remains on its original 3-second auto-open schedule.
+- Sound continues through two complete 1 → 2 → 3 → 1 loops (including transitions),
+  then gently fades out over 1.25 seconds and does not restart.
+- Swiping and other interaction can pause the scene loop; the soundtrack stops
+  after the second completed loop rather than at an arbitrary fixed timeout.
+- Music pauses when the tab is hidden, like the scene cycle.
+- A music toggle lets a visitor pause/resume while the two-loop window remains.
+
+Browsers control whether audible music can autoplay. JavaScript cannot override
+this policy. No third-party player is hidden and no YouTube audio is extracted.
+
+To test, run `python -m http.server 8000` and open `http://localhost:8000`.

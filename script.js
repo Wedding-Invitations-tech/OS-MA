@@ -242,6 +242,12 @@
         fadeFrame = null;
         currentScene = to;
         renderScene(endWeights);
+        // Notify the optional soundtrack only when a complete automatic
+        // Scene 3 -> Scene 1 loop has actually finished. The music is not
+        // stopped by a wall-clock timeout, so manual pauses stay in sync.
+        if (from === 2 && to === 0) {
+          window.dispatchEvent(new Event('invitation:rotation-complete'));
+        }
         scheduleHold();
       }
     };

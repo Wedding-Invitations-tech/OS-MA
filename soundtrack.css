@@ -1,0 +1,32 @@
+/* Small, accessible music control that never blocks the wax seal. */
+.soundtrack-toggle[hidden] { display:none !important; }
+.soundtrack-toggle {
+  position:fixed;
+  top:max(14px, env(safe-area-inset-top));
+  left:max(14px, env(safe-area-inset-left));
+  z-index:600;
+  display:flex;
+  align-items:center;
+  flex-direction:row;
+  gap:9px;
+  border:1px solid rgba(184,133,66,.72);
+  border-radius:999px;
+  padding:9px 13px;
+  color:#85531f;
+  background:rgba(255,247,235,.88);
+  box-shadow:0 3px 14px rgba(98,65,30,.13);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+  cursor:pointer;
+  font:600 14px/1.2 Georgia, Tahoma, sans-serif;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .2s ease, transform .18s ease, box-shadow .18s ease;
+}
+.soundtrack-toggle:hover { background:rgba(255,248,234,.98); }
+.soundtrack-toggle:active { transform:translateY(2px) scale(.98); box-shadow:0 1px 5px rgba(98,65,30,.1); }
+.soundtrack-toggle:focus-visible { outline:3px solid #a56f31; outline-offset:3px; }
+.soundtrack-icon { display:block; width:18px; height:18px; flex-shrink:0; }
+.soundtrack-toggle.is-playing { width:39px; height:39px; padding:10px; justify-content:center; }
+.soundtrack-toggle.is-playing .soundtrack-label { display:none; }
+@media (max-width:360px) { .soundtrack-toggle { left:8px; top:max(8px, env(safe-area-inset-top)); padding:7px 10px; font-size:12px; } }
+@media (prefers-reduced-motion:reduce) { .soundtrack-toggle { transition:none; } }
