@@ -94,6 +94,7 @@ button{font:inherit}
   position:fixed;
   inset:0;
   z-index:100;
+  cursor:pointer;
   display:grid;
   place-items:center;
   overflow:hidden;
@@ -515,3 +516,6 @@ button{font:inherit}
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
   .stage-art{opacity:1;transform:none}
 }
+
+/* Any tap on the closed envelope is an invitation-opening tap. */
+.envelope.is-opening { cursor:default; }

@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="regal-plum-continuum.css" />
   <link rel="stylesheet" href="finishing-touches.css" />
-  <link rel="stylesheet" href="soundtrack.css" />
   <script src="config.js" defer></script>
   <script src="soundtrack.js" defer></script>
   <script src="script.js" defer></script>
@@ -120,14 +119,8 @@
     </button>
   </div>
 
-  <!-- Music is optional until an authorised recording is placed in assets/music/. -->
-  <audio id="invitationSoundtrack" preload="auto" loop playsinline aria-hidden="true"></audio>
-  <button id="soundtrackToggle" class="soundtrack-toggle" type="button" hidden aria-label="تشغيل الموسيقى" title="تشغيل الموسيقى">
-    <svg class="soundtrack-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M8 5v11.5a3.5 3.5 0 1 0 2 3.15V8.1L19 6v8.5a3.5 3.5 0 1 0 2 3.15V3L8 5Z" fill="currentColor"/>
-    </svg>
-    <span id="soundtrackLabel" class="soundtrack-label">تشغيل الموسيقى</span>
-  </button>
+  <!-- Audio starts on the first envelope tap; no separate music control. -->
+  <audio id="invitationSoundtrack" preload="auto" playsinline aria-hidden="true"></audio>
 
   <div class="grain" aria-hidden="true"></div>
 </body>

@@ -6,12 +6,9 @@
   const openButton = document.getElementById('openInvitation');
   const envelopeCard = document.getElementById('envelopeCard');
   const OPEN_SEQUENCE_MS = 6300;
-  const AUTO_OPEN_DELAY_MS = 3000;
-  let autoOpenTimer = null;
 
   function openInvitation() {
     if (!envelope || envelope.classList.contains('is-opening')) return;
-    window.clearTimeout(autoOpenTimer);
     envelope.classList.add('is-opening');
     body.classList.add('has-opened');
     if (navigator.vibrate) navigator.vibrate(14);
@@ -25,21 +22,23 @@
     }, OPEN_SEQUENCE_MS);
   }
 
-  openButton?.addEventListener('click', openInvitation);
-  envelope?.addEventListener('pointerup', (event) => {
-    if (event.target === openButton || envelope.classList.contains('is-opening') || !envelopeCard) return;
-    const card = envelopeCard.getBoundingClientRect();
-    const cx = card.left + card.width / 2;
-    const cy = card.top + card.height * 0.532;
-    const radius = Math.max(54, card.width * 0.145);
-    if (Math.hypot(event.clientX - cx, event.clientY - cy) <= radius) openInvitation();
-  });
-  function scheduleAutoOpen() {
-    const immediatePreview = new URLSearchParams(window.location.search).get('preview') === 'open';
-    autoOpenTimer = window.setTimeout(openInvitation, immediatePreview ? 120 : AUTO_OPEN_DELAY_MS);
+  function beginInvitation() {
+    // This must run directly in the real user gesture. Calling play() from a
+    // timeout or after awaiting another promise may fail on iOS/Android.
+    // If a touch pointerup is followed by click, a rejected play can retry.
+    window.startInvitationSoundtrack?.();
+    openInvitation();
   }
-  if (document.readyState === 'complete') scheduleAutoOpen();
-  else window.addEventListener('load', scheduleAutoOpen, { once: true });
+
+  // The whole envelope (artwork, background, and wax seal) opens the invitation.
+  // Pointer-up supports touch browsers; click supports mouse, keyboard, and
+  // browsers which only grant audio permission on the synthesised click.
+  envelope?.addEventListener('pointerup', (event) => {
+    if (event.pointerType === 'touch' || event.pointerType === 'pen') {
+      beginInvitation();
+    }
+  }, { passive: true });
+  envelope?.addEventListener('click', beginInvitation);
 
   const config = window.INVITATION_CONFIG || {};
   const mapsLink = document.getElementById('mapsLink');
